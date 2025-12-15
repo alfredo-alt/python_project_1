@@ -60,30 +60,55 @@ while(True):
         print(" " * 10 + "ACTUALIZAR EMPRESA")
         print("=" * ANCHO)
         
-        ruc = input("Ingrese Código de la empresa a actualizar: ")
+        ruc = input("Ingrese RUC de la empresa a actualizar: ")
         if ruc in dic_empresas:
+            # Mesage de cambios realizados
+            msg = ""
+
             print(f"Empresa Encontrada: {dic_empresas[ruc]['razon_social']}")
-            nueva_razon = input(f"NUEVA RAZÓN SOCIAL({dic_empresas[ruc]['razon_social']}): ")
-            nueva_direccion = input(f"NUEVA DIRECCIÓN({dic_empresas[ruc]['direccion']}): ")
-            if nueva_razon:
-                dic_empresas[ruc]['razon_social'] = nueva_razon
-            if nueva_direccion:
-                dic_empresas[ruc]['direccion'] = nueva_direccion
-            print("EMPRESA ACTUALIZADA EXITOSAMENTE!!!")
+            
+            # Obtener valores actuales
+            razon_actual = dic_empresas[ruc]['razon_social']
+            direccion_actual = dic_empresas[ruc]['direccion']
+            
+            # Mensaje de ayuda
+            print("Si dejas en blanco, no hay cambios")
+
+            # Usar input con valor por defecto pre-escrito
+            nueva_razon = input(f"NUEVA RAZÓN SOCIAL ({razon_actual}): ")
+            # Si el usuario solo presiona Enter, mantener valor actual
+            if nueva_razon == "":
+                nueva_razon = razon_actual
+            else:
+                msg += "Cambio de razón social exitoso\n" 
+                                
+            nueva_direccion = input(f"NUEVA DIRECCIÓN ({direccion_actual}): ")
+            # Si el usuario solo presiona Enter, mantener valor actual
+            if nueva_direccion == "":
+                nueva_direccion = direccion_actual
+            else:
+                msg += "Cambio de dirección exitoso\n"
+    
+            # Actualizar los valores
+            dic_empresas[ruc]['razon_social'] = nueva_razon
+            dic_empresas[ruc]['direccion'] = nueva_direccion
+            
+            print(msg.rstrip("\n") if msg else "No hay cambios")
+
         else:
-            print('No se encontró la empresa para el código ingresado')
+            print('No se encontró la empresa para el RUC ingresado')
             
     elif opcion == 4:
         print("=" * ANCHO)
         print(" " * 10 + "ELIMINAR EMPRESA")
         print("=" * ANCHO)
         
-        ruc = input("Ingrese Código de la empresa a eliminar: ")
+        ruc = input("Ingrese RUC de la empresa a eliminar: ")
         if ruc in dic_empresas:
             del dic_empresas[ruc]
             print('EMPRESA ELIMINADA EXITOSAMENTE')
         else:
-            print('No se encontró la empresa para el código ingresado')
+            print('No se encontró la empresa para el RUC ingresado')
             
     elif opcion == 5:
         print("=" * ANCHO)
